@@ -2,6 +2,8 @@ var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
+PORT = 3000;
+
 var app = express();
 app.use(logger("dev"));
 
