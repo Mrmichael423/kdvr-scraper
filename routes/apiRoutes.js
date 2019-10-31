@@ -21,13 +21,14 @@ module.exports = function(app) {
           .attr("href");
         db.Article.create(result)
           .then(function(data) {
-            res.json(data);
+            // res.json(data);
+            console.log(data);
           })
           .catch(function(err) {
             res.json(err);
           });
+        res.redirect("/");
       });
-      res.send("scraping now");
     });
   });
   //Gets articles from the database and sends them to the front end
