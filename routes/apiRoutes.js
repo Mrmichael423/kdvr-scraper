@@ -18,15 +18,51 @@ module.exports = function(app) {
           .attr("href");
         db.Article.create(result)
           .then(function(data) {
-            console.log(data);
-            // res.json(data);
+            res.json(data);
           })
           .catch(function(err) {
-            console.log(err);
-            // res.json(err);
+            res.json(err);
           });
       });
       res.send("scraping now");
     });
+  });
+  //Gets articles from the database and sends them to the front end
+  app.get("/articles", function(req, res) {
+    db.Article.find()
+      .then(function(data) {
+        res.json(data);
+      })
+      .catch(function(err) {
+        res.json(err);
+      });
+  });
+  //Finds articles by their ID
+  app.get("/articles/:id", function(req, res) {
+    db.Article.findOne({ _id: req.params.id })
+      .populate("note")
+      .then(function(data) {
+        res.json(data);
+      })
+      .catch(function(err) {
+        res.json(err);
+      });
+  });
+  // Route for saving/updating an Article's associated Note
+  app.post("/articles/:id", function(req, res) {
+    db.Note.create(req.body)
+      .then(function(data) {
+        return db.Article.findByIdAndUpdate(
+          { _id: req.params.id },
+          { $set: { note: note._id } },
+          { new: true }
+        );
+      })
+      .then(function(data) {
+        res.json(data);
+      })
+      .catch(function(err) {
+        res.json(err);
+      });
   });
 };
