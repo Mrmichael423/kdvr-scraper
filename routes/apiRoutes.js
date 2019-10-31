@@ -3,6 +3,9 @@ var cheerio = require("cheerio");
 
 var db = require("../models");
 module.exports = function(app) {
+  app.get("/", function(req, res) {
+    res.render("index");
+  });
   // scraping data from the website to store in the database
   app.get("/scrape", function(req, res) {
     axios.get("https://www.kdvr.com").then(function(response) {
@@ -54,7 +57,7 @@ module.exports = function(app) {
       .then(function(data) {
         return db.Article.findByIdAndUpdate(
           { _id: req.params.id },
-          { $set: { note: note._id } },
+          { $set: { note: data._id } },
           { new: true }
         );
       })
