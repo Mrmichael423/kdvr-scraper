@@ -3,7 +3,7 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var exphbs = require("express-handlebars");
 
-PORT = 3000;
+PORT + process.env.PORT || 3000;
 
 var app = express();
 app.use(logger("dev"));
