@@ -23,11 +23,11 @@ module.exports = function(app) {
           .then(function(data) {
             // res.json(data);
             console.log(data);
+            res.redirect("/");
           })
           .catch(function(err) {
             res.json(err);
           });
-        res.redirect("/");
       });
     });
   });
